@@ -1,0 +1,140 @@
+import { React, useState } from 'react'
+import { Button, Form, FormControl } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
+import { FaMobile, FaDownload, FaRobot } from 'react-icons/fa'
+import { SiApple } from 'react-icons/si'
+import axios from 'axios'
+import NegaMarket from '../img/NegaMarket.png'
+import { useProductsContext } from '../context/ProductsProvider'
+
+const Login = () => {
+  const downloadAndroid = () => {
+    const url = 'https://new.neganoon.ir/app/apk/v2/neganoon.apk'
+    window.open(url, '_blank')
+  }
+  const downloadGoogle = () => {
+    const url = 'https://play.google.com/store/apps/details?id=com.neganoon'
+    window.open(url, '_blank')
+  }
+  const downloadIos = () => {
+    const url = 'https://anardoni.com/ios/app/hxZrP2ho6'
+    window.open(url, '_blank')
+  }
+
+  const { openModal, closeMOdal, showModal } = useProductsContext()
+  // const [show, setShow] = useState(false)
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const handleInputChange = (e) => {
+    let phonenumber = e.target.value
+    setPhoneNumber(phonenumber)
+  }
+  const sendLogin = (e) => {
+    e.preventDefault()
+    axios
+      .post(
+        'http://site.pillot.ir/admin/Customers/API/_startloginregister',
+        {
+          mobile: phoneNumber,
+        },
+        {
+          headers: {
+            token: 'test',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    setPhoneNumber('')
+  }
+
+  // const handleClose = () => setShow(false)
+  // const handleShow = () => setShow(true)
+
+  return (
+    <>
+      <Button
+        variant=' my-3 mr-3 '
+        className='login-btn px-3 hover-item'
+        onClick={openModal}
+      >
+        لینک های دانلود
+      </Button>
+
+      <Modal show={showModal} onHide={closeMOdal}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ color: '#e8d25a' }}>دانلود</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='d-flex flex-column'>
+            <div className='text-center'>
+              <img src={NegaMarket} alt='logo' style={{ width: '30%' }} />
+            </div>
+            <div className='d-flex flex-column my-4 row text-center'>
+              <div>
+                <button
+                  className='btn-download btn-download-sm my-2  col-12'
+                  type='button'
+                  onClick={downloadAndroid}
+                >
+                  دانلود مستقیم (اندروید)
+                  <FaDownload className=' ml-3' size={15} />
+                </button>
+                <button
+                  className='btn-download btn-download-sm my-2  col-12'
+                  type='button'
+                  onClick={downloadGoogle}
+                >
+                  دانلود از گوگل پلی (اندروید)
+                  <FaRobot className=' ml-3' size={15} />
+                </button>
+                <button
+                  className='btn-download btn-download-sm my-2 col-12'
+                  type='button'
+                  onClick={downloadIos}
+                >
+                  دانلود از اناردونی (ای او اس)
+                  <SiApple className=' ml-3' size={15} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* <div>
+            <div style={{ textAlign: 'end' }}>
+              <label>
+                <h6 style={{ color: '#0000006b' }}>شماره موبایل</h6>
+              </label>
+            </div>
+            <div className='row mx-0 justify-content-center'>
+              <input
+                className='col-10 text-end '
+                placeholder='شماره (ایران):   99 87 877 0912'
+                type='number'
+                style={{
+                  width: '100%',
+                  borderradius: '0.45rem',
+                  border: ' 1px solid #0000004f',
+                  height: '30px',
+                  outline: 'none',
+                  borderradius: '9px',
+                }}
+                onChange={handleInputChange}
+                value={phoneNumber}
+              />
+              <div className='col-1 my-auto'>
+                <FaMobile size={20} />
+              </div>
+            </div>
+          </div> */}
+        </Modal.Body>
+      </Modal>
+    </>
+  )
+}
+
+export default Login
