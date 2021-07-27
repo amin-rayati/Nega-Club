@@ -69,7 +69,7 @@ class CheckBox extends Component {
           <div className='text-right col-2'>
             <FaCheck
               className='icon-color1'
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
               size={15}
             />
           </div>

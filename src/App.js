@@ -7,6 +7,7 @@ import {
   Plugins,
   SingleProduct,
   WebServices,
+  Error,
 } from './pages/index'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -20,11 +21,29 @@ function App() {
     <Router>
       <NavbarComponent />
       <Switch>
-        <Route path='/'>
+        <Route exact path='/about'>
+          <About />
+        </Route>
+        <Route exact path='/articles'>
+          <Articles />
+        </Route>
+        <Route exact path='/contacts'>
+          <Contacts />
+        </Route>
+        <Route exact path='/plugins'>
+          <Plugins />
+        </Route>
+        <Route exact path='/blogpost/:id'>
+          <SingleProduct />
+        </Route>
+        <Route exact path='/webservices'>
+          <WebServices />
+        </Route>
+        <Route exact path='/'>
           <Home />
         </Route>
-        <Route path='/products:/1'>
-          <SingleProduct />
+        <Route exact path='*'>
+          <Error />
         </Route>
       </Switch>
       <Footer />

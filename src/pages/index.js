@@ -5,5 +5,15 @@ import Contacts from './Contacts'
 import Plugins from './Plugins'
 import SingleProduct from './SingleProduct'
 import WebServices from './WebServices'
+import Error from './Error'
 
-export { Home, About, Articles, Contacts, Plugins, SingleProduct, WebServices }
+export {
+  Home,
+  About,
+  Articles,
+  Contacts,
+  Plugins,
+  SingleProduct,
+  WebServices,
+  Error,
+}

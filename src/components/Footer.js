@@ -17,17 +17,20 @@ const Footer = () => {
             <p className='m-0' style={{ color: '#666666', fontSize: '10px' }}>
               تهران، خیابان مطهری، پلاک 28
             </p>
-            <GoLocation className='ml-1' style={{ color: '#44ce6f' }} />
+            <GoLocation className='ml-1' style={{ color: '#be9b30' }} />
           </div>
 
           <div className='footer-add d-flex flex-row mt-4'>
             <p className='m-0' style={{ color: '#666666', fontSize: '10px' }}>
               ایمیل : info@api.ir
             </p>
-            <FaVoicemail className='ml-1' style={{ color: '#44ce6f' }} />
+            <FaVoicemail className='ml-1' style={{ color: '#be9b30' }} />
           </div>
 
-          <div className=' d-flex flex-row mt-2 justify-content-end'>
+          <div
+            className=' d-flex flex-row mt-2  social-icons'
+            style={{ justifyContent: 'flex-end' }}
+          >
             <div
               className='bg-circle1 bg-circle4'
               style={{ border: '1px solid #0077B5' }}
@@ -81,7 +84,7 @@ const Footer = () => {
             <BsFillSquareFill
               className='ml-2 mt-1'
               size={8}
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
             />
           </div>
           <div className='footer-add d-flex flex-row mt-2'>
@@ -91,7 +94,7 @@ const Footer = () => {
             <BsFillSquareFill
               className='ml-2 mt-1'
               size={8}
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
             />
           </div>
           <div className='footer-add d-flex flex-row mt-2'>
@@ -101,7 +104,7 @@ const Footer = () => {
             <BsFillSquareFill
               className='ml-2 mt-1'
               size={8}
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
             />
           </div>
         </div>
@@ -116,7 +119,7 @@ const Footer = () => {
             <BsFillSquareFill
               className='ml-2 mt-1'
               size={8}
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
             />
           </div>
           <div className='footer-add d-flex flex-row mt-2'>
@@ -126,7 +129,7 @@ const Footer = () => {
             <BsFillSquareFill
               className='ml-2 mt-1'
               size={8}
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
             />
           </div>
           <div className='footer-add d-flex flex-row mt-2'>
@@ -136,7 +139,7 @@ const Footer = () => {
             <BsFillSquareFill
               className='ml-2 mt-1'
               size={8}
-              style={{ color: '#44ce6f' }}
+              style={{ color: '#be9b30' }}
             />
           </div>
         </div>
@@ -146,6 +149,12 @@ const Footer = () => {
           <h6 className='mt-4'>پرتال جامع وب سرویس ایران</h6>
         </div>
       </div>
+
+      <hr className='mt-4' />
+
+      <p className='text-center' style={{ fontSize: '10px' }}>
+        محفوظ میباشد NegaClub کلیه حقوق این پرتال نزد
+      </p>
     </div>
   )
 }

@@ -1,10 +1,13 @@
+/* eslint-disable no-undef */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Component, React } from 'react'
-import web from '../img/web.png'
-import api from '../img/api.png'
-import dargah from '../img/dargah.png'
+import { Link, link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 import { BsArrowLeft } from 'react-icons/bs'
 import { FiCalendar } from 'react-icons/fi'
+import { useLocation } from 'react-router-dom'
 
 const url = 'https://negaclub.ir/admin/BlogPosts/API/_allBlogPosts'
 
@@ -27,13 +30,13 @@ class Teach extends Component {
     })
     const data = await response.json()
     this.setState({ info: data.data })
-    console.log(data.data)
   }
 
   render() {
     const {
       state: { info },
     } = this
+
     return (
       <div className='margintop'>
         <h4 className='text text-center mb-4'>
@@ -59,7 +62,7 @@ class Teach extends Component {
     return (
       <div
         key={e.id}
-        className='col-lg-3 order-lg-1 col-md-12 order-md-3   col-sm-12 order-sm-3 col-12 order-3 mt-3'
+        className='col-lg-4 order-lg-1 col-md-12 order-md-3   col-sm-12 order-sm-3 col-12 order-3 mt-3'
       >
         <img src={e.image} className='th-img' alt='web' />
         <div className='th-btn d-flex flex-row'>
@@ -79,9 +82,11 @@ class Teach extends Component {
             style={{ color: '#1d5e90' }}
             size={20}
           />
-          <h6 className='title' style={{ fontSize: '10px' }}>
-            ادامه مطالب
-          </h6>
+          <Link to={`/blogpost/${e.id}`}>
+            <h6 className='title' style={{ fontSize: '10px' }}>
+              ادامه مطالب
+            </h6>
+          </Link>
         </div>
       </div>
     )

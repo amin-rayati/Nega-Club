@@ -8,7 +8,6 @@ class Box extends Component {
   state = {
     info: [],
   }
-
   componentDidMount() {
     this.fetchData()
   }
@@ -30,7 +29,7 @@ class Box extends Component {
       state: { info },
     } = this
     return (
-      <div className='row my-5 justify-content-center mx-1'>
+      <div className='row d-flex my-5 justify-content-center mx-1'>
         {this.mapInfo(info)}
       </div>
     )
@@ -64,7 +63,7 @@ class Box extends Component {
     return (
       <div
         key={e.id}
-        className='col-lg-2 col-md-5 col-sm-5 col-12 text-center box mr-1 my-2  '
+        className='col-lg-3 col-md-5 col-sm-5 col-12 text-center box  box-m  my-2  '
       >
         <div className=' d-flex justify-content-center'>
           <div

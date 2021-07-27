@@ -22,7 +22,7 @@ const ModalDownload = () => {
   }
   return (
     <Modal show={showModal} onHide={closeMOdal}>
-      <Modal.Header closeButton>
+      <Modal.Header style={{ direction: 'rtl' }} closeButton>
         <Modal.Title style={{ color: '#e8d25a' }}>دانلود</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -30,7 +30,7 @@ const ModalDownload = () => {
           <div className='text-center'>
             <img src={NegaMarket} alt='logo' style={{ width: '30%' }} />
           </div>
-          <div className='d-flex flex-column my-4 row text-center'>
+          <div className='d-flex flex-column my-4 row text-center mx-1'>
             <div>
               <button
                 className='btn-download btn-download-sm my-2  col-12'

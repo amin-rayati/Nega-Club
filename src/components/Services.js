@@ -30,7 +30,6 @@ class Services extends Component {
     })
     const data = await response.json()
     this.setState({ info: data.data })
-    console.log(data.data)
   }
 
   render() {
@@ -84,7 +83,7 @@ class Services extends Component {
     return (
       <div
         key={e.id}
-        className='col-10 col-lg-4 col-md-5 col-sm-5 mx-1 text-center   box-bg1 mt-3'
+        className='col-10 col-lg-5 col-md-5 col-sm-5 mx-1 text-center box-bg1 mt-3'
       >
         <div className='row py-4 px-3 text-center'>
           <div className='col-xl-9 order-xl-1 col-lg-9 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-2 d-flex flex-column  mt-p'>

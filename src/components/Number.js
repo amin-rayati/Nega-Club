@@ -18,7 +18,7 @@ const Number = () => {
           <div className='col-lg-3 col-md-6 col-sm-6 col-12  p-5 num-box'>
             <h6
               className='text-center'
-              style={{ color: '#44ce6f', fontSize: '30px' }}
+              style={{ color: '#be9a2f', fontSize: '30px' }}
             >
               10 +
             </h6>
@@ -28,7 +28,7 @@ const Number = () => {
           <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
             <h6
               className='text-center'
-              style={{ color: '#44ce6f', fontSize: '30px' }}
+              style={{ color: '#be9a2f', fontSize: '30px' }}
             >
               97 %
             </h6>
@@ -38,7 +38,7 @@ const Number = () => {
           <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
             <h6
               className='text-center'
-              style={{ color: '#44ce6f', fontSize: '30px' }}
+              style={{ color: '#be9a2f', fontSize: '30px' }}
             >
               5000 +
             </h6>
@@ -48,7 +48,7 @@ const Number = () => {
           <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
             <h6
               className='text-center'
-              style={{ color: '#44ce6f', fontSize: '30px' }}
+              style={{ color: '#be9a2f', fontSize: '30px' }}
             >
               8 +
             </h6>
