@@ -38,14 +38,17 @@ class Services extends Component {
     } = this
     return (
       <div className=' my-5 '>
-        <h4 className='text text-center mb-4'>ویژگی های خدمات</h4>
+        <h4 className='text text-center mb-4' style={{ color: '#1d5e90' }}>
+          خدمات ارزش افزوده
+        </h4>
         <div>
           <div className='bar mx-auto'></div>
         </div>
-        <p className='text-center' style={{ fontSize: 'small' }}>
-          امکانات و ویژگی هایی که برای استفاده از یک وب سرویس خوب باید در نظر
-          داشت باشید را میتونید به صورت یک جا در پرتال جامع وب سرویس ایران در
-          اختیار داشته باشید
+        <p style={{ fontSize: '15px', textAlign: 'justify', direction: 'rtl' }}>
+          مشتریان باشگاه نگاکلاب و سایر باشگاهها و اپلیکیشن های طرف قرارداد،
+          علاوه بر استفاده از خدمات تخفیفی در شبکه گسترده پذیرندگان، می توانند
+          از خدمات ارزش افزوده این مجموعه استفاده نمایند. برخی از این خدمات
+          عبارتند از :
         </p>
 
         <div className='row d-flex justify-content-center'>
@@ -88,7 +91,16 @@ class Services extends Component {
         <div className='row py-4 px-3 text-center'>
           <div className='col-xl-9 order-xl-1 col-lg-9 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-2 d-flex flex-column  mt-p'>
             <h6 className='text text-center'>{e.name}</h6>
-            <p className='box-font  box-p'>{e.text}</p>
+            <p
+              className='box-font  box-p mt-3'
+              style={{
+                fontSize: '15px',
+                textAlign: 'justify',
+                direction: 'rtl',
+              }}
+            >
+              {e.text}
+            </p>
           </div>
 
           <div className=' col-xl-3 order-xl-2 col-lg-3 order-xl-2 col-md-12  order-lg-2  order-md-1 col-sm-12 order-sm-1 col-12  order-1  box-right'>
@@ -99,7 +111,7 @@ class Services extends Component {
               <img
                 className='icon-color'
                 src={e.icon}
-                style={{ color: this.shadeColor(e.color, -50) }}
+                style={{ color: this.shadeColor(e.color, -50), width: '100%' }}
                 alt='icon'
               />
             </div>

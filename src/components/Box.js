@@ -21,7 +21,9 @@ class Box extends Component {
       body: 'token=test',
     })
     const data = await response.json()
-    this.setState({ info: data.data })
+    if (data.status === 200) {
+      this.setState({ info: data.data })
+    }
   }
 
   render() {
@@ -29,9 +31,41 @@ class Box extends Component {
       state: { info },
     } = this
     return (
-      <div className='row d-flex my-5 justify-content-center mx-1'>
-        {this.mapInfo(info)}
-      </div>
+      <>
+        <div className='row d-flex my-5 justify-content-center mx-1'>
+          {this.mapInfo(info)}
+        </div>
+        <p
+          className=' mt-5'
+          style={{
+            fontSize: '15px',
+            textAlign: 'justify',
+            direction: 'rtl',
+            lineHeight: '30px',
+          }}
+        >
+          گروه{' '}
+          <a
+            href='https://negarine.com/'
+            className='mx-2'
+            style={{ color: '#bf9b30', fontSize: '20px' }}
+          >
+            نگارینه
+          </a>
+          با سالها تجربه در حوزه راه اندازی باشگاه مشتریان، و همچنین راهبری
+          باشگاههای مختلف در بخش اجرایی، بازرگانی و زیرساختی، و با در دست داشتن
+          قراردادهای معتبر در بخشهای مالی، اعتباری، گردشگری، بیمه، خدماتی و ...
+          توانسته است رویکردی جدید در هم افزایی خدمات و مشتریان باشگاههای مختلف
+          ایجاد کرده تا بصورت کاملا برد برد، هر باشگاهی بتواند از خدمات و
+          مشتریان باشگاههای دیگر استفاده کرده و با صرف کمترین هزینه، بیشترین
+          فروش و افزایش مشتری و وفادارسازی را برای هر فروشگاه و به تبع آن باشگاه
+          مشتریان به ارمغان آورد. برای رسیدن به این منظور نگارینه خدمات متعددی
+          را برای باشگاه های طرف قرارداد، پذیرندگان (فروشگاههای طرف قرارداد هر
+          باشگاه) و دارندگان (مشتریان هر پذیرنده، باشگاه و یا سیستمهای نگارینه)
+          در نظر گرفته است که در این سند به برخی از این ویژگی ها، اشاره خواهد
+          شد.
+        </p>
+      </>
     )
   }
 
@@ -63,7 +97,7 @@ class Box extends Component {
     return (
       <div
         key={e.id}
-        className='col-lg-3 col-md-5 col-sm-5 col-12 text-center box  box-m  my-2  '
+        className='col-lg-3 col-md-5 col-sm-5 col-12 text-center box  box-m  mb-2  '
       >
         <div className=' d-flex justify-content-center'>
           <div
@@ -73,13 +107,26 @@ class Box extends Component {
             <img
               src={e.icon}
               className='icon-color'
-              style={{ color: this.shadeColor(e.color, -50) }}
+              style={{ color: this.shadeColor(e.color, -50), width: '100%' }}
             />
           </div>
         </div>
 
-        <h6 className='mt-3'>{e.name}</h6>
-        <p className='box-font'>{e.text}</p>
+        <h6 className='mt-5'>{e.name}</h6>
+        <p
+          className='box-font mt-5'
+          style={{
+            fontSize: '13px',
+            textAlign: 'justify',
+            direction: 'rtl',
+            border: '1px solid #ece2e2',
+            padding: '10px',
+            borderRadius: '12px',
+            height: '200px',
+          }}
+        >
+          {e.text}
+        </p>
       </div>
     )
   }

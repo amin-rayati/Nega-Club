@@ -4,101 +4,161 @@ import { useLocation } from 'react-router-dom'
 import Loader from '../pages/Loader'
 import Error from '../pages/Error'
 import { Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import { FiCalendar } from 'react-icons/fi'
 import { BsFillSquareFill } from 'react-icons/bs'
 import { useProductsContext } from '../context/ProductsProvider'
+import { Helmet } from 'react-helmet'
 
-const url = 'https://negaclub.ir/admin/BlogPosts/API/_singlePost?token=test'
-
-// class SingleProduct extends Component {
-//   state = {}
-
-//   componentDidMount() {
-//     this.getSinglePost()
-//     const pathname = window.location.pathname
-//     const id = JSON.stringify(pathname.split('/')[2])
-//   }
-
-//   getSinglePost = async () => {
-//     axios
-//       .post(url, {
-//         id: this.id,
-//       })
-//       .then((response) => {
-//         this.setState(response.data.data)
-//         console.log(this.state)
-//       })
-//       .catch((error) => {
-//         console.error(error)
-//       })
-//   }
-//   render() {
-//     // const {
-//     //   state: { info },
-//     // } = this
-//     return (
-//       <div className='row my-5 justify-content-center mx-1'>
-//         hello
-//         {/* {this.mapInfo(info)} */}
-//       </div>
-//     )
-//   }
-
-// mapInfo = (info) => {
-//   return info.map((e) => this.buildDiv(e))
-// }
-
-// buildDiv = (e) => {
-//   return (
-//     <div
-//       key={e.id}
-//       className='col-lg-2 col-md-5 col-sm-5 col-12 text-center box mr-1 my-2  '
-//     >
-//       <div className=' d-flex justify-content-center'>
-//         <div
-//           className='bg-circle'
-//           style={{ background: this.shadeColor(e.color, 60) }}
-//         >
-//           <img src={e.icon} className='icon-color' alt='' />
-//         </div>
-//       </div>
-
-//       <h6 className='mt-3'>{e.name}</h6>
-//       <p className='box-font'>{e.text}</p>
-//     </div>
-//   )
-// }
-// }
-
-// export default SingleProduct
+const url = 'https://negaclub.ir/admin/Articles/API/_singleArticle?token=test'
 
 const SingleProduct = () => {
   const { pathname } = useLocation()
-  const id = pathname.split('/')[2]
+  const typeId = pathname.split('/')[2]
+  const id = pathname.split('/')[3]
+
+  const {
+    Loading,
+    setLoading,
+    GridView,
+    ListView,
+    gridView,
+    subjectIdContxt,
+    setSubjectIdContxt,
+  } = useProductsContext()
+
+  const [subjects, setSubjects] = useState([])
+  const [lastNewsList, setLastNewsList] = useState([])
+  const [MostViewsList, setMostViewsList] = useState([])
+
   const [singleProduct, setSingleProduct] = useState({})
-  const { Loading, setLoading } = useProductsContext()
   const { Error, setError } = useProductsContext()
 
-  const getSinglePost = useCallback(async () => {
+  const [type, setType] = useState('')
+  const [typeName, setTypeName] = useState('')
+
+  const date = (date) => {
+    const newdate = new Date(date * 1000)
+    return newdate.toLocaleDateString('fa-Pers')
+  }
+  const getType = async () => {
+    try {
+      const rawResponse = await fetch(
+        'https://negaclub.ir/admin/ArticleTypes/API/_getTypes?token=test',
+        {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded', // <-- Specifying the Content-Type
+          }),
+        }
+      )
+      const content = await rawResponse.json()
+      if (content.isDone) {
+        setType(content.data)
+        setTypeName(content.data.filter((e) => e.id == typeId))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getSubject = async () => {
+    try {
+      const rawResponse = await fetch(
+        'https://negaclub.ir/admin/Subjects/API/_getSubjects?token=test',
+        {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded', // <-- Specifying the Content-Type
+          }),
+        }
+      )
+      const content = await rawResponse.json()
+      if (content.isDone) {
+        setSubjects(content.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getLastNewsTitle = async () => {
+    try {
+      const rawResponse = await fetch(
+        'https://negaclub.ir/admin/Articles/API/_lastArticles?token=test',
+        {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded', // <-- Specifying the Content-Type
+          }),
+          body: JSON.stringify({
+            typeId: typeId,
+            limit: 5,
+          }),
+        }
+      )
+      const content = await rawResponse.json()
+
+      if (content.isDone) {
+        setLastNewsList(content.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getMostViewNewsTitle = async () => {
+    try {
+      const rawResponse = await fetch(
+        'https://negaclub.ir/admin/Articles/API/_mostViewsArticle?token=test',
+        {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }),
+          body: JSON.stringify({
+            typeId: typeId,
+            limit: 5,
+          }),
+        }
+      )
+      const content = await rawResponse.json()
+
+      if (content.isDone) {
+        setMostViewsList(content.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getSingleNew = async () => {
     setLoading(true)
     axios
       .post(url, {
-        id: id,
+        typeId: typeId,
+        articleId: id,
       })
       .then((response) => {
         setLoading(false)
-        setSingleProduct(response.data.data)
-        console.log(singleProduct)
+
+        if (response.data.isDone) {
+          setSingleProduct(response.data.data)
+        }
       })
       .catch((error) => {
         console.error(error)
       })
-  }, [id])
+  }
+
+  setTimeout(() => {
+    setLoading(false)
+  }, 1000)
 
   useEffect(() => {
-    getSinglePost()
-  }, [getSinglePost])
+    getSubject()
+    getType()
+    getLastNewsTitle()
+    getMostViewNewsTitle()
+    getSingleNew()
+  }, [id])
 
   if (Loading) {
     return <Loader />
@@ -107,281 +167,281 @@ const SingleProduct = () => {
     return <Error />
   }
   return (
-    <div className='mt-5'>
-      <div className='container m-t'>
-        <div className='text-center '>
-          <h3 className='p-5' style={{ color: '#1d5e90' }}>
-            درگاه پرداخت اینترنتی سیزپی
-          </h3>
+    <div className='mt-5 container px-0'>
+      <div className=' m-t'>
+        <div className=' m-t marginTop '>
+          <div
+            className='text-center'
+            style={{
+              backgroundColor: '#4a4848',
+              color: '#ffffff',
+            }}
+          >
+            <h1 className='p-5' style={{ color: '#fff' }}>
+              {singleProduct['title']}
+            </h1>
+          </div>
         </div>
-        <hr />
 
-        <div className='bg-color1'>
+        <div className='bg-color1 mt-5'>
           <div className='row'>
-            <div className='col-lg-4 order-lg-1 col-md-12 order-md-2 col-sm-12 order-2 col-12 order-2'>
-              <div className='input-group mt-2'>
-                <button
-                  type='button'
-                  className='search-btn btn'
-                  style={{ background: '#e8d882', color: '#fff' }}
-                >
-                  جستجو
-                </button>
-                <input
-                  type='search'
-                  className='form-control rounded text-right'
-                  placeholder='...جستجو'
-                  aria-label='Search'
-                  aria-describedby='search-addon'
-                />
-              </div>
-              <div className=' footer-box'>
-                <h6 className='mt-4'>لینک های مفید</h6>
+            <div className='col-lg-3 order-lg-1 col-md-12 order-md-1  col-sm-12 order-sm-1 col-12 order-1'>
+              {/* dasteBandi */}
+              <div
+                className=' footer-box mt-3'
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #0000003b',
+                  borderRadius: '15px',
+                  padding: '10px 20px 10px  20px',
+                }}
+              >
+                <h6 className='mt-4' style={{ fontSize: '20px' }}>
+                  دسته بندی
+                </h6>
                 <hr className='mt-2' />
-                <div className='footer-add d-flex flex-row mt-4'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
+
+                <LinkContainer to={`/articles/${typeId}`}>
+                  <div
+                    onClick={() => {
+                      setSubjectIdContxt(0)
+                    }}
+                    className='footer-add d-flex flex-row mt-4'
+                    style={{ cursor: 'pointer' }}
                   >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    وب سرویس ها
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
+                    {subjectIdContxt !== 0 ? (
+                      <p
+                        className='m-0'
+                        style={{ color: '#666666', fontSize: '15px' }}
+                      >
+                        همه
+                      </p>
+                    ) : (
+                      <p
+                        className='m-0'
+                        style={{
+                          color: '#bf9b30',
+                          fontSize: '18px',
+                          fontWeight: 'bolder',
+                        }}
+                      >
+                        همه
+                      </p>
+                    )}
+
+                    <BsFillSquareFill
+                      className='ml-2 mt-2'
+                      size={8}
+                      style={{ color: '#be9b30' }}
+                    />
+                  </div>
+                </LinkContainer>
+
+                {subjects &&
+                  subjects.map((e) => {
+                    return (
+                      <>
+                        <LinkContainer to={`/articles/${typeId}`}>
+                          <div
+                            onClick={() => {
+                              setSubjectIdContxt(e.id)
+                            }}
+                            key={e.id}
+                            className='footer-add d-flex flex-row mt-4'
+                            style={{ cursor: 'pointer' }}
+                          >
+                            {subjectIdContxt !== e.id ? (
+                              <p
+                                className='m-0'
+                                style={{ color: '#666666', fontSize: '15px' }}
+                              >
+                                {e.subject}
+                              </p>
+                            ) : (
+                              <p
+                                className='m-0'
+                                style={{
+                                  color: '#bf9b30',
+                                  fontSize: '18px',
+                                  fontWeight: 'bolder',
+                                }}
+                              >
+                                {e.subject}
+                              </p>
+                            )}
+
+                            <BsFillSquareFill
+                              className='ml-2 mt-2'
+                              size={8}
+                              style={{ color: '#be9b30' }}
+                            />
+                          </div>
+                        </LinkContainer>
+                      </>
+                    )
+                  })}
               </div>
-              <div className=' footer-box'>
-                <h6 className='mt-4'>اخرین دیدگاه ها</h6>
+              {/* dasteBandi */}
+
+              <div
+                className=' footer-box mt-3'
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #0000003b',
+                  borderRadius: '15px',
+                  padding: '10px 20px 10px  20px',
+                }}
+              >
+                <h6 className='mt-4' style={{ fontSize: '20px' }}>
+                  آخرین {typeName && typeName[0]['type']}
+                </h6>
                 <hr className='mt-2' />
-                <div className='footer-add d-flex flex-row mt-4'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    وب سرویس ها
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-              </div>
-              <div className=' footer-box'>
-                <h6 className='mt-4'>دسته ها</h6>
-                <hr className='mt-2' />
-                <div className='footer-add d-flex flex-row mt-4'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    وب سرویس ها
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
-                <div className='footer-add d-flex flex-row mt-2'>
-                  <p
-                    className='m-0'
-                    style={{ color: '#666666', fontSize: '15px' }}
-                  >
-                    درگاه پرداخت اینترنتی سیزپی
-                  </p>
-                  <BsFillSquareFill
-                    className='ml-2 mt-2'
-                    size={8}
-                    style={{ color: '#be9b30' }}
-                  />
-                </div>
+
+                {lastNewsList &&
+                  lastNewsList.map((e) => {
+                    return (
+                      <LinkContainer
+                        to={`/articles/${typeId}/${e.id}`}
+                        style={{ cursor: 'pointer', fontSize: '15px' }}
+                      >
+                        <div
+                          key={e.id}
+                          className='footer-add d-flex flex-row mt-4'
+                          style={{ cursor: 'pointer' }}
+                        >
+                          {/* <p
+                            className='m-0'
+                            style={{ color: '#666666', fontSize: '15px' }}
+                          >
+                            ({date(e.Date)})
+                          </p> */}
+                          <p
+                            className='m-0  ml-2'
+                            style={{
+                              color: '#666666',
+                              fontSize: '15px',
+                            }}
+                          >
+                            {e.title}
+                          </p>
+
+                          <BsFillSquareFill
+                            className='ml-2 mt-2'
+                            size={8}
+                            style={{ color: '#be9b30' }}
+                          />
+                        </div>
+                      </LinkContainer>
+                    )
+                  })}
               </div>
 
-              <div className=' footer-box'>
-                <h6 className='mt-4'>برچسب ها</h6>
+              <div
+                className=' footer-box mt-3'
+                style={{
+                  cursor: 'pointer',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #0000003b',
+                  borderRadius: '15px',
+                  padding: '10px 20px 10px  20px',
+                }}
+              >
+                <h6 className='mt-4' style={{ fontSize: '20px' }}>
+                  پربازدید ترین {typeName && typeName[0]['type']}
+                </h6>
                 <hr className='mt-2' />
-                <div className='row justify-content-center'>
-                  {singleProduct.tag &&
-                    singleProduct.tag.map((item) => {
-                      return (
-                        <Button
-                          key={item}
-                          variant=' my-3 mx-2'
-                          className='btn-barchasb btn-barchasb px-1 hover-item  col-lg-3 col-md-6 col-sm-6 col-6'
+
+                {MostViewsList &&
+                  MostViewsList.map((e) => {
+                    return (
+                      <LinkContainer
+                        to={`/articles/${typeId}/${e.id}`}
+                        style={{ cursor: 'pointer', fontSize: '15px' }}
+                      >
+                        <div
+                          key={e.Id}
+                          className='footer-add d-flex flex-row mt-4'
+                          style={{ cursor: 'pointer' }}
                         >
-                          {item}
-                        </Button>
-                      )
-                    })}
-                </div>
+                          {/* <p
+                            className='m-0 '
+                            style={{ color: '#666666', fontSize: '15px' }}
+                          >
+                            ( {e.View} تعداد بازدید)
+                          </p> */}
+                          <p
+                            className='m-0 ml-2'
+                            style={{ color: '#666666', fontSize: '15px' }}
+                          >
+                            {e.title}
+                          </p>
+                          <BsFillSquareFill
+                            className='ml-2 mt-2'
+                            size={8}
+                            style={{ color: '#be9b30' }}
+                          />
+                        </div>
+                      </LinkContainer>
+                    )
+                  })}
               </div>
             </div>
 
             <div
-              className='col-lg-8 order-lg-2 col-md-12 order-md-1 col-sm-12 order-sm-1 col-12 order-1 text-end'
+              key={singleProduct['id']}
+              className='col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 order-sm-1 col-12 order-1 text-end'
               style={{ textAlign: 'end' }}
             >
               <div style={{ border: '1px solid #d2d2d2' }}>
                 <img
-                  className='col-12'
                   src={singleProduct['image']}
+                  style={{ width: '100%', height: '50%', objectFit: 'cover' }}
                   alt='dargah'
                 />
-                <h3 className='mt-2 mr-4' style={{ color: '#1d5e90' }}>
-                  {singleProduct['name']}
-                </h3>
+
+                {singleProduct['important'] ? (
+                  <div style={{ textAlign: 'initial' }}>
+                    <span
+                      class='badge span-badge-single-new  '
+                      style={{
+                        backgroundColor: '#bf9b30',
+                        color: '#fff',
+                        width: '80px',
+                        height: '30px',
+                        fontSize: '20px',
+                      }}
+                    >
+                      مهم
+                    </span>
+                  </div>
+                ) : null}
+                <div
+                  className='d-flex mt-5 mr-3'
+                  style={{ justifyContent: 'right' }}
+                >
+                  <span
+                    className=''
+                    style={{
+                      color: '#666666',
+                      fontSize: '10px',
+                      margin: '10px',
+                    }}
+                  >
+                    ( {singleProduct['view']} تعداد بازدید)
+                  </span>
+                  <h3 className='' style={{ color: '#1d5e90' }}>
+                    {singleProduct['title']}
+                  </h3>
+                </div>
+
                 <div className='th-btn1 d-flex flex-row'>
                   <p
                     className='mr-3'
                     style={{ color: '#7f7676', fontSize: '13px' }}
                   >
-                    بهمن ۱۶, ۱۳۹۸
+                    {date(singleProduct['date'])}
                   </p>
                   <FiCalendar
                     className='ml-1'
@@ -390,43 +450,16 @@ const SingleProduct = () => {
                   />
                 </div>
 
-                <p className='mx-3 mt-3' style={{ textAlign: 'end' }}>
-                  {singleProduct['shortText']}
+                <p
+                  className='mx-3 mt-3'
+                  style={{
+                    textAlign: 'end',
+                    lineBreak: 'anywhere',
+                    lineHeight: '30px',
+                  }}
+                >
+                  {singleProduct['details']}
                 </p>
-                <h3 className='mt-4 mx-4' style={{ color: '#1d5e90' }}>
-                  نحوه ایجاد درگاه پرداخت سیزپی در کمتر از 5 دقیقه
-                </h3>
-                <p className='mx-3 mt-3' style={{ textAlign: 'end' }}>
-                  {singleProduct['text']}
-                </p>
-                <h3 className='mt-4 mx-4' style={{ color: '#1d5e90' }}>
-                  نحوه تسویه حساب در درگاه های پرداخت
-                </h3>
-                <p className='mx-3 mt-3' style={{ textAlign: 'end' }}>
-                  {singleProduct['shortText']}
-                </p>
-
-                <div className='row justify-content-end'>
-                  <div className='col-lg-8 order-lg-1 col-md-12 order-md-2  col-sm-12 order-sm-2 col-12 order-2 text-center'>
-                    {singleProduct.tag &&
-                      singleProduct.tag.map((item) => {
-                        return (
-                          <Button
-                            variant=' my-3 mx-2'
-                            className='btn-barchasb btn-barchasb px-1 hover-item  col-lg-3 col-md-6 col-sm-6 col-6'
-                          >
-                            {item}
-                          </Button>
-                        )
-                      })}
-                  </div>
-                  <h6
-                    style={{ color: '#1d5e90' }}
-                    className='mt-4 text-center col-lg-4 order-lg-2 col-md-12  order-md-1 col-sm-12 order-sm-1 col-12 order-1'
-                  >
-                    : برچسب ها
-                  </h6>
-                </div>
               </div>
             </div>
           </div>

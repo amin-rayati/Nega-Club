@@ -30,7 +30,10 @@ const ModalDownload = () => {
           <div className='text-center'>
             <img src={NegaMarket} alt='logo' style={{ width: '30%' }} />
           </div>
-          <div className='d-flex flex-column my-4 row text-center mx-1'>
+          <div className='text-center my-5'>
+            <h6> !!لینک های دانلود اپلیکیشن نگاکلاب به زودی قرار داده میشود</h6>
+          </div>
+          {/* <div className='d-flex flex-column my-4 row text-center mx-1'>
             <div>
               <button
                 className='btn-download btn-download-sm my-2  col-12'
@@ -57,7 +60,7 @@ const ModalDownload = () => {
                 <SiApple className=' ml-3' size={15} />
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </Modal.Body>
     </Modal>

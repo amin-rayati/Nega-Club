@@ -9,6 +9,7 @@ import Number from '../components/Number'
 import Teach from '../components/Teach'
 import { useProductsContext } from '../context/ProductsProvider'
 import Loader from '../pages/Loader'
+import { Helmet } from 'react-helmet'
 
 import '../App.css'
 
@@ -24,7 +25,10 @@ function Home() {
   }
   return (
     <div>
-      <div className='container m-t bg-color'>
+      <Helmet>
+        <title>باشگاه مشتریان نگارینه، نگاکلاب</title>
+      </Helmet>
+      <div className='container m-t bg-color marginTop '>
         <Header />
 
         <Box />

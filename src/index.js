@@ -2,12 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { ProductsProvider } from './context/ProductsProvider'
-
+import { CookiesProvider } from 'react-cookie'
 ReactDOM.render(
-  <React.StrictMode>
+  <ProductsProvider>
+    <App />
+  </ProductsProvider>,
+  document.getElementById('root')
+)
+ReactDOM.render(
+  <CookiesProvider>
     <ProductsProvider>
       <App />
     </ProductsProvider>
-  </React.StrictMode>,
+  </CookiesProvider>,
   document.getElementById('root')
 )

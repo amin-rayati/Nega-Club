@@ -1,10 +1,11 @@
 import React from 'react'
 import { useProductsContext } from '../context/ProductsProvider'
 import Loader from '../pages/Loader'
-import Capture1 from '../img/Capture1.png'
+import about from '../img/about.jpg'
 import { Button } from 'react-bootstrap'
 import { Link, link } from 'react-router-dom'
-
+import aboutus from '../img/aboutus.png'
+import { Helmet } from 'react-helmet'
 const About = () => {
   const { Loading, setLoading } = useProductsContext()
 
@@ -16,46 +17,101 @@ const About = () => {
     return <Loader />
   }
   return (
-    <div className='mt-5'>
-      <div className='container m-t'>
-        <div className='text-center'>
-          <h3 className='p-5' style={{ color: '#1d5e90' }}>
+    <div className='mt-5 '>
+      <div className='container m-t marginTop px-0'>
+        <div
+          className='text-center'
+          style={{
+            backgroundColor: '#4a4848',
+            color: '#ffffff',
+          }}
+        >
+          <h1 className='p-5' style={{ color: '#fff' }}>
             درباره ما
-          </h3>
+          </h1>
+          <Helmet>
+            <title> درباره نگاکلاب</title>
+          </Helmet>
         </div>
-        <div className='row  mt-4 mx-2'>
+        <div className='row  mt-4 mx-2 px-3'>
           <div className='col-12 order-2 order-md-1 col-lg-6  '>
-            <h4 className='text mb-4' style={{ color: '#1d5e90' }}>
-              درباره ما
-            </h4>
-            <div className='text-right'>
+            {/* <div className='text-center'>
               <div className='bar'></div>
-            </div>
+            </div> */}
 
-            <p className='text' style={{ fontSize: 'small' }}>
-              ارائه کاربردی ترین وب سرویس با بالاترین کیفیت و آپتایم ممکن.
+            <h3
+              style={{
+                textAlign: 'justify',
+                direction: 'rtl',
+                lineHeight: '50px',
+                fontSize: '15px',
+                marginTop: '17px',
+                fontWeight: 'bolder',
+              }}
+            >
+              گروه شرکت های نگارینه مشاوره و اجرای پرداخت الکترونیک ، انفورماتیک
+              و پروژه باشگاه مشتریان
+            </h3>
+
+            <p
+              className='mt-4'
+              style={{
+                fontSize: '15px',
+                textAlign: 'justify',
+                direction: 'rtl',
+                lineHeight: '30px',
+              }}
+            >
+              در دنیای کسب و کار امروزی، و با وجود تعدد مشاغل یکسان، قدرت انتخاب
+              یک مشتری برای انتخاب یک فروشگاه به شدت بالا رفته و فروشندگان سعی
+              دارند با برنامه های متنوع وفاداری، نسبت به وفادارسازی مشتریان و
+              تکرار خرید توسط آنها، و همچنین جذب مشتری جدید دامنه فروش خود را
+              گسترده تر کنند.
             </p>
-            <p className='text-right'>وب سرویس های به دو دسته تقسیم مشوند :</p>
-            <p className='text-right'>1 – وب سرویس هایی ارائه شده :</p>
-            <p className='text-right'>
-              وب سرویس هایی که از طریق این مجموعه با بهترین کیفیت و با به روز
-              ترین تکنولوژی ها و زیرساخت ها شبکه ای در دسترس کاربران قرار می
-              گیرد.
+            <p
+              style={{
+                fontSize: '15px',
+                textAlign: 'justify',
+                direction: 'rtl',
+                lineHeight: '30px',
+              }}
+            >
+              به همین دلیل فرمول ساده ی تعداد فروش بیشتر با سود کمتر، مدتهاست
+              تکیه گاه اصلی کسب و کارهای تمام دنیا شده است. بدیهی است دستیابی به
+              مشتریان جدید و یا وفادارسازی مشتریان فعلی، نیازمند ابزارهای
+              تبلیغاتی، ارتباطی، روابط عمومی و غیره می باشد که این مقوله خود
+              مستلزم صرف هزینه های هنگفت خواهد بود.
             </p>
-            <p className='text-right'>2 – وب سرویس هایی معرفی شده :</p>
-            <p className='text-right'>
-              وب سرویس های کاربردی و پر استفاده ای که از طریق شرکت های نرم
-              افزاری بزرگ ایران ارائه می شوند و ما انها را به شما معرفی می
-              نماییم.
+            <p
+              style={{
+                fontSize: '15px',
+                textAlign: 'justify',
+                direction: 'rtl',
+                lineHeight: '30px',
+              }}
+            >
+              گروه نگارینه، با سالها تجربه در حوزه راه اندازی باشگاه مشتریان، و
+              همچنین راهبری باشگاههای مختلف در بخش اجرایی، بازرگانی و زیرساختی،
+              و با در دست داشتن قراردادهای معتبر در بخشهای مالی، اعتباری،
+              گردشگری، بیمه، خدماتی و ... توانسته است رویکردی جدید در هم افزایی
+              خدمات و مشتریان باشگاههای مختلف ایجاد کرده تا بصورت کاملا برد برد،
+              هر باشگاهی بتواند از خدمات و مشتریان باشگاههای دیگر استفاده کرده و
+              با صرف کمترین هزینه، بیشترین فروش و افزایش مشتری و وفادارسازی را
+              برای هر فروشگاه و به تبع آن باشگاه مشتریان به ارمغان آورد.
             </p>
           </div>
 
-          <div className='col-12 order-1 order-md-2 col-lg-6 mt-5'>
-            <img src={Capture1} at='tarh' className='img-w ' alt='img' />
+          <div className='col-12 order-1 order-md-2 col-lg-6 '>
+            <img
+              src={aboutus}
+              at='tarh'
+              alt='img'
+              style={{ borderRadius: '15px', width: '100%' }}
+            />
           </div>
         </div>
 
-        <div className='row m-4'>
+        {/* <div className='row m-4'>
           <div className='col-lg-4 col-md-12 col-sm-12 col-12'>
             <h4 className='text mb-4' style={{ color: '#1d5e90' }}>
               چشم انداز مجموعه
@@ -88,18 +144,18 @@ const About = () => {
               ارائه شده استفاده می نمایند.
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div
-        className='gradiant-color text-center p-5 '
+        className='gradiant-color text-center p-5 mt-3'
         style={{ color: 'white' }}
       >
         <h4>نیاز به مشاوره فنی دارید؟</h4>
         <p style={{ color: 'white' }}>
           کارشناسان مجرب ما همواره آماده پاسخگویی به پرسش های شما هستند!
         </p>
-        <Link to='/contacts'>
+        <Link to='/contactus'>
           <Button variant=' my-3 mr-3 ' className='login-btn px-3 hover-item'>
             تماس بگیرید
           </Button>
@@ -120,44 +176,42 @@ const About = () => {
 
         <div className='mt-5'>
           <div className='row  mx-2'>
+            <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
+              <h6
+                className='text-center'
+                style={{ color: '#be9a2f', fontSize: '30px' }}
+              >
+                100 +
+              </h6>
+              <p className='text-center'>خدمات ارزش افزوده</p>
+            </div>
+            <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
+              <h6
+                className='text-center'
+                style={{ color: '#be9a2f', fontSize: '30px' }}
+              >
+                25000 +
+              </h6>
+              <p className='text-center'>مشتری وفادار</p>
+            </div>
+            <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
+              <h6
+                className='text-center'
+                style={{ color: '#be9a2f', fontSize: '30px' }}
+              >
+                4500 +
+              </h6>
+              <p className='text-center'>پذیرنده مختلف</p>
+            </div>
+
             <div className='col-lg-3 col-md-6 col-sm-6 col-12  p-5 num-box'>
               <h6
                 className='text-center'
                 style={{ color: '#be9a2f', fontSize: '30px' }}
               >
-                10 +
+                370 +
               </h6>
-              <p className='text-center'>تعداد وب سرویس ها</p>
-            </div>
-
-            <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
-              <h6
-                className='text-center'
-                style={{ color: '#be9a2f', fontSize: '30px' }}
-              >
-                97 %
-              </h6>
-              <p className='text-center'>رضایت از خدمات</p>
-            </div>
-
-            <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
-              <h6
-                className='text-center'
-                style={{ color: '#be9a2f', fontSize: '30px' }}
-              >
-                5000 +
-              </h6>
-              <p className='text-center'>مشتری</p>
-            </div>
-
-            <div className='col-lg-3 col-md-6 col-sm-6 col-12 p-5 num-box'>
-              <h6
-                className='text-center'
-                style={{ color: '#be9a2f', fontSize: '30px' }}
-              >
-                8 +
-              </h6>
-              <p className='text-center'>سال فعالیت</p>
+              <p className='text-center'>صنف مختلف</p>
             </div>
           </div>
         </div>
@@ -166,7 +220,7 @@ const About = () => {
           <div className='row d-flex justify-content-center mx-3'>
             <div className='row text-center num-box1'>
               <div className='col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-2 mt-5'>
-                <Link to='/contacts'>
+                <Link to='/contactus'>
                   <Button
                     variant=' my-3 mr-3 '
                     className='call-btn px-3 hover-item'
