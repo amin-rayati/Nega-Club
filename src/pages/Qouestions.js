@@ -33,6 +33,7 @@ const Qouestions = () => {
   }
 
   const getQuestions = async (key) => {
+    console.log(key)
     axios
       .post(url, {
         questionCategoryId: key,

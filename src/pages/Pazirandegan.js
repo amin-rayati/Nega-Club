@@ -135,6 +135,7 @@ const Pazirandegan = () => {
       )
 
       .then((response) => {
+        console.log(response)
         if (response.data.isDone) {
           setTable(response.data.data)
         }

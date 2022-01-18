@@ -1,27 +1,8 @@
 import { ReactChild, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import {
-  Home,
-  About,
-  Articles,
-  Contacts,
-  Plugins,
-  SingleProduct,
-  WebServices,
-  Error,
-  Castes,
-} from './pages/index'
-
 import Public from './pages/Public'
 import Private from './pages/Private'
-
-import Provider from './pages/Provider'
-import SingleProvider from './pages/SingleProvider'
-import PositiveCallBack from './pages/PositiveCallBack'
-import NegativeCallBack from './pages/NegativeCallBack'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import NavbarComponent from './components/Navbar'
-import Footer from './components/Footer'
 import './App.css'
 
 import ScrollToTop from './pages/ScrollToTop'
@@ -63,7 +44,6 @@ function App() {
   }
   function ScrollToTop() {
     const { pathname } = useLocation()
-
     useEffect(() => {
       window.scrollTo(0, 0)
     }, [pathname])

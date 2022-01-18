@@ -13,8 +13,7 @@ import {
 import Provider from '../pages/Provider'
 import SingleProvider from '../pages/SingleProvider'
 import Pazirandegan from './Pazirandegan'
-import PositiveCallBack from '../pages/PositiveCallBack'
-import NegativeCallBack from '../pages/NegativeCallBack'
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import NavbarComponent from '../components/Navbar'
 import Footer from '../components/Footer'

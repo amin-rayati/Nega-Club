@@ -54,13 +54,21 @@ export default function Carousel({ filterProvider }) {
 
   const getHeaderSlider = async () => {
     try {
-      const rawResponse = await fetch(url, {
-        method: 'POST',
-        headers: new Headers({
-          'Content-Type': 'application/x-www-form-urlencoded', // <-- Specifying the Content-Type
-        }),
-      })
+      const rawResponse = await fetch(
+        'https://negaclub.ir/admin/Sliders/API/_sliders?token=test',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            token: 'test',
+          },
+          body: JSON.stringify({
+            token: 'test',
+          }),
+        }
+      )
       const content = await rawResponse.json()
+
       if (content.isDone) {
         setHeaderSlider(content.data)
       }

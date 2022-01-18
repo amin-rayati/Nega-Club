@@ -21,9 +21,8 @@ class Box extends Component {
       body: 'token=test',
     })
     const data = await response.json()
-    if (data.status === 200) {
-      this.setState({ info: data.data })
-    }
+
+    this.setState({ info: data.data })
   }
 
   render() {

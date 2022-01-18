@@ -48,14 +48,10 @@ const Provider = () => {
   const workgroupId = pathname.split('/')[2]
   const CastId = pathname.split('/')[3]
   const cityid = cookies['city']
-
   const [provider, setProvider] = useState([])
   const [searchValue, setSearchValue] = useState('')
-
   const [i, setI] = useState(0)
-
   const [moreLoading, setMoreLoading] = useState(false)
-
   const [activeBtnMoreLoad, setActiveBtnMoreLoad] = useState(false)
 
   const handleSearchChange = (e) => {
@@ -65,7 +61,6 @@ const Provider = () => {
     setI(0)
     await getProvider()
   }
-
   const getProvider = async () => {
     const element = document.getElementById('cat')
     const [by, type] = element.value.toString().split('-')
